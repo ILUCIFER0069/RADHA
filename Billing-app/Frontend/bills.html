@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Bills - Radha Agency Billing System</title>
+    <link rel="manifest" href="../static/manifest.json">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- IndexedDB Library -->
+    <script src="https://cdn.jsdelivr.net/npm/idb@7/build/umd.js"></script>
+    <!-- Database wrapper -->
+    <script src="../static/js/database.js"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/bills.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="app-title">
+                <i class="fas fa-receipt"></i>
+                <span>View Bills</span>
+            </div>
+            <div class="header-actions">
+                <button class="print-selected-btn" id="printSelectedBtn">
+                    <i class="fas fa-print"></i>
+                    <span>Print Selected</span>
+                </button>
+                <button class="back-btn" id="backBtn">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Back</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Page Title -->
+        <div class="page-title">
+            <h1>View Bills</h1>
+            <p>View and print your generated bills</p>
+        </div>
+
+        <!-- Messages -->
+        <div class="message success" id="successMessage"></div>
+        <div class="message error" id="errorMessage"></div>
+
+        <!-- Search and Filter Section -->
+        <div class="search-section">
+            <div class="search-group">
+                <label for="searchInput">Search Bills</label>
+                <input 
+                    type="text" 
+                    id="searchInput" 
+                    class="search-input" 
+                    placeholder="Search by customer name or bill number..."
+                >
+            </div>
+        </div>
+
+        <!-- Bills Container -->
+        <div class="bills-container" id="billsContainer">
+            <!-- Loading state -->
+            <div class="loading">
+                <div class="loading-spinner"></div>
+                <p>Loading bills...</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Bill Detail Modal -->
+    <div class="modal" id="billModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Bill Details</h2>
+                <button class="close-modal" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Bill details will be loaded here -->
+            </div>
+            <div class="modal-actions">
+                <button class="modal-btn btn-print" id="printBillBtn">
+                    <i class="fas fa-print"></i>
+                    Print Bill
+                </button>
+                <button class="modal-btn btn-close" id="closeModalBtn">
+                    <i class="fas fa-times"></i>
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom JavaScript -->
+    <script src="js/bills.js"></script>
+
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('../static/js/service-worker.js')
+                    .then((registration) => {
+                        console.log('Service Worker registered successfully:', registration.scope);
+                    })
+                    .catch((error) => {
+                        console.error('Service Worker registration failed:', error);
+                    });
+            });
+        }
+    </script>
+</body>
+</html> 
